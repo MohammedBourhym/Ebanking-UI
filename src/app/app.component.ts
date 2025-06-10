@@ -1,14 +1,18 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [CommonModule, RouterOutlet, HeaderComponent],
+  template: `
+    <app-header *ngIf="authService.isLoggedIn()"></app-header>
+    <router-outlet></router-outlet>
+  `
 })
 export class AppComponent {
-  title = 'ebanking-frontend';
+  constructor(public authService: AuthService) {}
 }

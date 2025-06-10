@@ -1,15 +1,24 @@
 import { Routes } from '@angular/router';
-import { CustomersComponent } from './customers/customers.component';
-import { AddCustomerComponent } from './customers/add-customer/add-customer.component';
-import { AccountsComponent } from './accounts/accounts.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'customers', component: CustomersComponent },
-  { path: 'customers/add', component: AddCustomerComponent },
-  { path: 'customers/edit/:id', component: AddCustomerComponent },
-  { path: 'accounts', component: AccountsComponent },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+  { 
+    path: 'login', 
+    loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent) 
+  },
+  { 
+    path: 'register', 
+    loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent) 
+  },
+  { 
+    path: '', 
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+      { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent) },
+      { path: 'customers', loadComponent: () => import('./customers/customers.component').then(m => m.CustomersComponent) },
+      { path: 'accounts', loadComponent: () => import('./accounts/accounts.component').then(m => m.AccountsComponent) }
+    ]
+  },
+  { path: '**', redirectTo: '/login' }
 ];
