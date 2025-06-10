@@ -1,0 +1,51 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Customers</h1>
+  
+  <!-- Search Bar -->
+  <div class="mb-4 flex">
+    <input 
+      type="text" 
+      [(ngModel)]="searchKeyword" 
+      placeholder="Search customers..." 
+      class="border rounded p-2 flex-grow"
+    />
+    <button 
+      (click)="searchCustomers()" 
+      class="bg-blue-500 text-white px-4 py-2 ml-2 rounded"
+    >
+      Search
+    </button>
+  </div>
+  
+  <!-- Customers List -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="py-2 px-4 border">ID</th>
+          <th class="py-2 px-4 border">Name</th>
+          <th class="py-2 px-4 border">Email</th>
+          <th class="py-2 px-4 border">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers" class="border-b hover:bg-gray-50">
+          <td class="py-2 px-4 border">{{customer.id}}</td>
+          <td class="py-2 px-4 border">{{customer.name}}</td>
+          <td class="py-2 px-4 border">{{customer.email}}</td>
+          <td class="py-2 px-4 border">
+            <button 
+              (click)="deleteCustomer(customer.id)" 
+              class="bg-red-500 text-white px-2 py-1 rounded text-sm"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="customers.length === 0">
+          <td colspan="4" class="py-4 text-center">No customers found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
