@@ -44,4 +44,9 @@ export class AccountsService {
     const data = { accountSource, accountDestination, amount, description };
     return this.http.post(`${this.apiURL}/transfer`, data);
   }
+
+  // Get all accounts
+  public getAllAccounts(): Observable<Array<AccountDetails>> {
+    return this.http.get<Array<AccountDetails>>(this.apiURL);
+  }
 }

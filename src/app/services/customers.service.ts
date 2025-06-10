@@ -32,4 +32,14 @@ export class CustomersService {
   public deleteCustomer(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
+
+  // Get customer by ID
+  public getCustomer(id: number): Observable<Customer> {
+    return this.http.get<Customer>(`${this.apiURL}/${id}`);
+  }
+
+  // Update customer
+  public updateCustomer(customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(`${this.apiURL}/${customer.id}`, customer);
+  }
 }

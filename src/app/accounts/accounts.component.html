@@ -1,0 +1,60 @@
+<div class="container">
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="searchAccountId" placeholder="Enter account ID to search...">
+    <button (click)="searchAccount()">Search Account</button>
+  </div>
+
+  <!-- Selected Account Operations -->
+  <div *ngIf="selectedAccount" class="section">
+    <h2>Account Details</h2>
+    <div class="account-details">
+      <p class="account-info">Account ID: <strong>{{selectedAccount.accountId}}</strong></p>
+      <p class="account-info">Balance: <span class="account-balance">{{selectedAccount.balance | number:'1.2-2'}} €</span></p>
+    
+    <h3>Account Operations</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let op of selectedAccount.accountOperationDTOS">
+          <td>{{op.operationDate | date:'medium'}}</td>
+          <td>{{op.type}}</td>
+          <td [style.color]="op.type === 'DEBIT' ? '#dc2626' : '#059669'">
+            {{op.type === 'DEBIT' ? '-' : '+'}}{{op.amount | number:'1.2-2'}} €
+          </td>
+          <td>{{op.description}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- All Accounts List -->
+  <div class="section">
+    <h2>All Accounts</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Account ID</th>
+          <th>Balance</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let account of accounts">
+          <td>{{account.accountId}}</td>
+          <td class="account-balance">{{account.balance | number:'1.2-2'}} €</td>
+          <td>
+            <button (click)="selectAccount(account)" style="background-color: #4b5563">View Details</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

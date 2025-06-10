@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CustomersService } from '../services/customers.service';
 import { Customer } from '../model/customer.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css']
 })
