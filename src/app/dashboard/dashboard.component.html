@@ -1,0 +1,50 @@
+<div class="container mx-auto p-4">
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-600 mb-2">Total Customers</h3>
+      <p class="text-3xl font-bold text-blue-600">{{totalCustomers}}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-600 mb-2">Total Accounts</h3>
+      <p class="text-3xl font-bold text-green-600">{{totalAccounts}}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-600 mb-2">Total Balance</h3>
+      <p class="text-3xl font-bold text-purple-600">{{totalBalance | number:'1.2-2'}} €</p>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Bar Chart -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-xl font-bold mb-4">Customers & Accounts Overview</h3>
+      <div style="display: block">
+        <canvas 
+          baseChart 
+          [datasets]="barChartData.datasets"
+          [labels]="barChartData.labels"
+          [options]="barChartOptions"
+          [type]="barChartType"
+        >
+        </canvas>
+      </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-xl font-bold mb-4">Account Balance Distribution</h3>
+      <div style="display: block">
+        <canvas 
+          baseChart 
+          [datasets]="pieChartData.datasets"
+          [labels]="pieChartData.labels"
+          [options]="pieChartOptions"
+          [type]="pieChartType"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+</div>
