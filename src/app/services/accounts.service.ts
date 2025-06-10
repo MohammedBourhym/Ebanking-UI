@@ -21,6 +21,12 @@ export class AccountsService {
     return this.http.get<AccountDetails>(`${this.apiURL}/${accountId}/pageOperations?page=${page}&size=${size}`);
   }
 
+
+
+  public getAccountHistory(accountId:String):Observable<any>{
+    return this.http.get<any>(`${this.apiURL}/${accountId}/pageOperations`);
+  }
+
   // Debit an account
   public debit(accountId: string, amount: number, description: string): Observable<any> {
     const data = { accountId, amount, description };

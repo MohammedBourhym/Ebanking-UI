@@ -1,7 +1,19 @@
 <div class="container mx-auto p-4">
-  <h1 class="text-2xl font-bold mb-4">Add New Customer</h1>
+  <h1 class="text-2xl font-bold mb-4">{{ formTitle }}</h1>
   
   <form (ngSubmit)="saveCustomer()" class="max-w-md">
+    <div class="mb-4" *ngIf="isEditMode">
+      <label for="id" class="block mb-2">ID</label>
+      <input 
+        type="text" 
+        id="id"
+        [(ngModel)]="newCustomer.id" 
+        name="id"
+        disabled
+        class="w-full border rounded p-2 bg-gray-100"
+      />
+    </div>
+    
     <div class="mb-4">
       <label for="name" class="block mb-2">Name</label>
       <input 
@@ -31,7 +43,7 @@
         type="submit" 
         class="bg-green-500 text-white px-4 py-2 rounded"
       >
-        Save
+        {{ submitButtonText }}
       </button>
       <button 
         type="button" 

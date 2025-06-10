@@ -7,10 +7,11 @@ import { Customer } from '../model/customer.model';
 @Component({
   selector: 'app-customers',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css']
 })
+
 export class CustomersComponent implements OnInit {
   customers: Customer[] = [];
   searchKeyword: string = '';
