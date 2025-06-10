@@ -16,14 +16,19 @@ export class AccountsService {
 
   constructor(private http: HttpClient) {}
 
+
+
+  // Get all accounts
+  public getAllAccounts(): Observable<AccountDetails[]> {
+    return this.http.get<AccountDetails[]>(this.apiURL);
+  }
+
   // Get account details with paginated operations
   public getAccount(accountId: string, page: number, size: number): Observable<AccountDetails> {
     return this.http.get<AccountDetails>(`${this.apiURL}/${accountId}/pageOperations?page=${page}&size=${size}`);
   }
 
-
-
-  public getAccountHistory(accountId:String):Observable<any>{
+  public getAccountHistory(accountId: String): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/${accountId}/pageOperations`);
   }
 
@@ -43,10 +48,5 @@ export class AccountsService {
   public transfer(accountSource: string, accountDestination: string, amount: number, description: string): Observable<any> {
     const data = { accountSource, accountDestination, amount, description };
     return this.http.post(`${this.apiURL}/transfer`, data);
-  }
-
-  // Get all accounts
-  public getAllAccounts(): Observable<Array<AccountDetails>> {
-    return this.http.get<Array<AccountDetails>>(this.apiURL);
   }
 }

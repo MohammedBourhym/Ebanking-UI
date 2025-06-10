@@ -1,60 +1,82 @@
-<div class="container">
+<div class="container mx-auto p-4">
   <!-- Search Bar -->
-  <div class="search-bar">
-    <input type="text" [(ngModel)]="searchAccountId" placeholder="Enter account ID to search...">
-    <button (click)="searchAccount()">Search Account</button>
+  <div class="flex justify-between items-center mb-4">
+    <div class="flex gap-2">
+      <input 
+        type="text" 
+        [(ngModel)]="searchAccountId" 
+        placeholder="Search account by ID" 
+        class="border rounded p-2 flex-grow"
+      >
+      <button 
+        (click)="searchAccount()" 
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Search
+      </button>
+    </div>
   </div>
 
   <!-- Selected Account Operations -->
-  <div *ngIf="selectedAccount" class="section">
-    <h2>Account Details</h2>
-    <div class="account-details">
-      <p class="account-info">Account ID: <strong>{{selectedAccount.accountId}}</strong></p>
-      <p class="account-info">Balance: <span class="account-balance">{{selectedAccount.balance | number:'1.2-2'}} €</span></p>
+  <div *ngIf="selectedAccount" class="bg-white rounded-lg shadow p-4 mb-6">
+    <h2 class="text-xl font-bold mb-4">Account Details</h2>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <p class="text-gray-600">Account ID: <span class="font-semibold text-gray-900">{{selectedAccount.accountId}}</span></p>
+      <p class="text-gray-600">Balance: <span class="font-semibold text-green-600">{{selectedAccount.balance | number:'1.2-2'}} €</span></p>
+    </div>
     
-    <h3>Account Operations</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Type</th>
-          <th>Amount</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let op of selectedAccount.accountOperationDTOS">
-          <td>{{op.operationDate | date:'medium'}}</td>
-          <td>{{op.type}}</td>
-          <td [style.color]="op.type === 'DEBIT' ? '#dc2626' : '#059669'">
-            {{op.type === 'DEBIT' ? '-' : '+'}}{{op.amount | number:'1.2-2'}} €
-          </td>
-          <td>{{op.description}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <h3 class="text-lg font-semibold mb-3">Operations</h3>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr *ngFor="let op of selectedAccount.accountOperationDTOS" class="hover:bg-gray-50">
+            <td class="px-6 py-4">{{op.operationDate | date:'medium'}}</td>
+            <td class="px-6 py-4">{{op.type}}</td>
+            <td class="px-6 py-4" [ngClass]="{'text-red-600': op.type === 'DEBIT', 'text-green-600': op.type === 'CREDIT'}">
+              {{op.type === 'DEBIT' ? '-' : '+'}}{{op.amount | number:'1.2-2'}} €
+            </td>
+            <td class="px-6 py-4">{{op.description}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- All Accounts List -->
-  <div class="section">
-    <h2>All Accounts</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Account ID</th>
-          <th>Balance</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let account of accounts">
-          <td>{{account.accountId}}</td>
-          <td class="account-balance">{{account.balance | number:'1.2-2'}} €</td>
-          <td>
-            <button (click)="selectAccount(account)" style="background-color: #4b5563">View Details</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="bg-white rounded-lg shadow p-4">
+    <h2 class="text-xl font-bold mb-4">All Accounts</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Account ID</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Balance</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr *ngFor="let account of accounts" class="hover:bg-gray-50">
+            <td class="px-6 py-4">{{account.accountId}}</td>
+            <td class="px-6 py-4 text-green-600 font-semibold">{{account.balance | number:'1.2-2'}} €</td>
+            <td class="px-6 py-4">
+              <button 
+                (click)="selectAccount(account)" 
+                class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                View Details
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
