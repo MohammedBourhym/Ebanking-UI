@@ -3,7 +3,9 @@
 ## Rapport de Développement Complet - Interface Utilisateur
 
 Cette application constitue la **partie frontend** d'une solution E-Banking complète, développée avec **Angular**. Elle démontre l'utilisation des concepts Angular modernes et des meilleures pratiques de développement pour créer une interface bancaire sécurisée et performante.
-
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
 ### Backend Spring Boot Associé
 
 **Repository Backend** : [E-Banking Backend Spring Boot](https://github.com/MoBourhym/Ebanking-app.git)
