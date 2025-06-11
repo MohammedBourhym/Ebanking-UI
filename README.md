@@ -1129,6 +1129,6 @@ export function errorInterceptor(req: HttpRequest<any>, next: HttpHandlerFn): Ob
 }
 ```
 
-## 🎯 Conclusion
+## Conclusion
 
 Cette application E-Banking démontre une maîtrise complète des concepts Angular modernes et des meilleures pratiques de développement frontend. Elle offre une solution robuste, sécurisée et performante pour la gestion bancaire en ligne.
