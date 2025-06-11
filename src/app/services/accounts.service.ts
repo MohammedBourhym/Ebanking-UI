@@ -7,9 +7,6 @@ import { environment } from '../../../environment/environment';
 @Injectable({
   providedIn: 'root'
 })
-@Injectable({
-  providedIn: 'root'
-})
 export class AccountsService {
 
   private apiURL = environment.backendHost + '/accounts';
@@ -29,7 +26,7 @@ export class AccountsService {
   }
 
   public getAccountHistory(accountId: String): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/${accountId}/pageOperations`);
+    return this.http.get<any>(`${this.apiURL}/${accountId}/operations`);
   }
 
   // Debit an account

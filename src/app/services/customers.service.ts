@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Customer } from '../model/customer.model';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../../environment/environment';
 
 @Injectable({
@@ -15,7 +15,14 @@ export class CustomersService {
 
   // Get all customers
   public getAllCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.apiURL);
+    return this.http.get<Customer[]>(this.apiURL).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    console.error('An error occurred:', error);
+    return throwError(() => new Error('Something went wrong; please try again later.'));
   }
 
   // Search customers by keyword

@@ -1,8 +1,8 @@
 <div class="container mx-auto p-4">
-  <div class="flex justify-between items-center mb-4">
+  <div class="flex justify-between items-center mt-20 mb-4">
     <h1 class="text-2xl font-bold">Customers</h1>
-    <a 
-      [routerLink]="['/customers/add']" 
+    <a
+      [routerLink]="['/customers/add']"
       class="bg-green-500 text-white px-4 py-2 rounded inline-block"
     >
       Add Customer
@@ -29,35 +29,32 @@
   <div class="overflow-x-auto">
     <table class="min-w-full bg-white border">
       <thead>
-        <tr class="bg-gray-100">
-          <th class="py-2 px-4 border">ID</th>
-          <th class="py-2 px-4 border">Name</th>
-          <th class="py-2 px-4 border">Email</th>
-          <th class="py-2 px-4 border">Actions</th>
+        <tr>
+          <th class="py-2 px-4 border-b">ID</th>
+          <th class="py-2 px-4 border-b">Name</th>
+          <th class="py-2 px-4 border-b">Email</th>
+          <th class="py-2 px-4 border-b">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let customer of customers" class="border-b hover:bg-gray-50">
-          <td class="py-2 px-4 border">{{customer.id}}</td>
-          <td class="py-2 px-4 border">{{customer.name}}</td>
-          <td class="py-2 px-4 border">{{customer.email}}</td>
-          <td class="py-2 px-4 border flex gap-1">
+        <tr *ngFor="let customer of customers">
+          <td class="py-2 px-4 border-b">{{customer.id}}</td>
+          <td class="py-2 px-4 border-b">{{customer.name}}</td>
+          <td class="py-2 px-4 border-b">{{customer.email}}</td>
+          <td class="py-2 px-4 border-b">
             <button 
-              [routerLink]="['/customers/edit', customer.id]" 
-              class="bg-blue-500 text-white px-2 py-1 rounded text-sm"
-            >
-              Update
-            </button>
-            <button 
+              *ngIf="authService.hasRole('ROLE_USER')"
               (click)="deleteCustomer(customer.id)" 
-              class="bg-red-500 text-white px-2 py-1 rounded text-sm"
-            >
+              class="bg-red-500 text-white px-3 py-1 rounded mr-2">
               Delete
             </button>
+            <button 
+              *ngIf="authService.hasRole('ROLE_USER')"
+              (click)="editCustomer(customer.id)" 
+              class="bg-blue-500 text-white px-3 py-1 rounded">
+              Edit
+            </button>
           </td>
-        </tr>
-        <tr *ngIf="customers.length === 0">
-          <td colspan="4" class="py-4 text-center">No customers found</td>
         </tr>
       </tbody>
     </table>

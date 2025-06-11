@@ -6,10 +6,11 @@ export interface RegisterRequest {
 }
 
 export interface AuthenticationRequest {
-  email: string;
+  username: string;
   password: string;
 }
 
 export interface AuthenticationResponse {
-  token: string;
+  accessToken: string;
+  refreshToken?: string;
 }

@@ -1,5 +1,7 @@
-<app-header></app-header>
+<!-- Debug info (remove in production) -->
+<div *ngIf="false" class="bg-yellow-100 p-2 text-xs">
+  Debug: isLoggedIn = {{ authService.isLoggedIn() }}, hasToken = {{ !!authService.getToken() }}
+</div>
 
-<main class="container mx-auto mt-20 px-4">
-  <router-outlet />
-</main>
+<app-header *ngIf="authService.isLoggedIn()"></app-header>
+<router-outlet></router-outlet>

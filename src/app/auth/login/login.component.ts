@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -10,25 +10,40 @@ import { AuthService } from '../../services/auth.service';
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.component.html'
 })
-export class LoginComponent {
-  email: string = '';
+export class LoginComponent implements OnInit {
+  username: string = '';
   password: string = '';
+  isLoading: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
   onSubmit() {
-    if (this.email && this.password) {
+    if (this.username && this.password) {
+      this.isLoading = true;
+      this.errorMessage = '';
+
       this.authService.authenticate({
-        email: this.email,
+        username: this.username,
         password: this.password
       }).subscribe({
         next: (response) => {
+          this.authService.saveToken(response.accessToken);
+          this.isLoading = false;
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
+          this.isLoading = false;
+          this.errorMessage = 'Login failed. Please check your credentials.';
           console.error('Login failed:', error);
         }
       });

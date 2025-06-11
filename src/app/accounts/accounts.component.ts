@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AccountsService } from '../services/accounts.service';
 import { AccountDetails } from '../model/account.model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-accounts',
@@ -18,7 +19,10 @@ export class AccountsComponent implements OnInit {
   currentPage: number = 0;
   pageSize: number = 5;
 
-  constructor(private accountsService: AccountsService) {}
+  constructor(
+    private accountsService: AccountsService,
+    public authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadAccounts();
@@ -26,9 +30,11 @@ export class AccountsComponent implements OnInit {
 
   loadAccounts(): void {
     this.accountsService.getAllAccounts().subscribe({
-      next: data => this.accounts = data,
+   
+      next: data =>this.accounts=data,
       error: err => console.error('Error loading accounts:', err)
     });
+   
   }
 
   searchAccount(): void {
@@ -41,8 +47,10 @@ export class AccountsComponent implements OnInit {
   }
 
   selectAccount(account: AccountDetails): void {
-    this.accountsService.getAccount(account.accountId, this.currentPage, this.pageSize).subscribe({
-      next: data => this.selectedAccount = data,
+    this.accountsService.getAccountHistory(account.id).subscribe({
+      next: data => {this.selectedAccount = data
+        console.log(data)
+      },
       error: err => console.error('Error loading account details:', err)
     });
   }

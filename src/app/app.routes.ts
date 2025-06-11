@@ -1,24 +1,53 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guards/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { CustomersComponent } from './customers/customers.component';
+import { AccountsComponent } from './accounts/accounts.component';
+import { AddCustomerComponent } from './customers/add-customer/add-customer.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { LoginComponent } from './auth/login/login.component';
 
 export const routes: Routes = [
-  { 
-    path: 'login', 
-    loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent) 
+  {
+    path: 'login',
+    component: LoginComponent
   },
-  { 
-    path: 'register', 
-    loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent) 
+  {
+    path: 'register',
+    component: RegisterComponent
   },
-  { 
-    path: '', 
-    canActivate: [authGuard],
-    children: [
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-      { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent) },
-      { path: 'customers', loadComponent: () => import('./customers/customers.component').then(m => m.CustomersComponent) },
-      { path: 'accounts', loadComponent: () => import('./accounts/accounts.component').then(m => m.AccountsComponent) }
-    ]
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_USER'] }
   },
-  { path: '**', redirectTo: '/login' }
+  {
+    path: 'customers',
+    component: CustomersComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_USER'] }
+  },
+  {
+    path: 'customers/add',
+    component: AddCustomerComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN','ROLE_USER'] }
+  },
+  {
+    path: 'accounts',
+    component: AccountsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN', 'ROLE_USER'] }
+  },
+  {
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: '/login'
+  }
 ];
+

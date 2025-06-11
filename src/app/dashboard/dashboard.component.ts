@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgChartsModule } from 'ng2-charts';
+import { NgChartsModule, BaseChartDirective } from 'ng2-charts';  // Fixed import
 import { Chart, ChartConfiguration } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
 import { AccountsService } from '../services/accounts.service';
 import { CustomersService } from '../services/customers.service';
 import { forkJoin } from 'rxjs';
